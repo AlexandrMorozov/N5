@@ -66,10 +66,6 @@ public class UserService implements UserDetailsService {
             return false;
         }
 
-        if (roleRepo.findByRole("ROLE_USER") == null) {
-            roleRepo.save(new Role("ROLE_USER"));
-        }
-
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setDateOfRegistration(new Date());
         user.setActive(true);
