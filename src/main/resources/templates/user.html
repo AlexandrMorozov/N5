@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+
+    <script type="text/javascript">
+        //script for checkboxes selection
+        function selectAllUsers() {
+
+            var mainCheckbox = document.getElementById("maincheckbox");
+            var listOfCheckboxes = document.getElementsByName("id");
+
+            for (var i = 0; i < listOfCheckboxes.length; i++) {
+                listOfCheckboxes[i].checked = mainCheckbox.checked;
+            }
+        }
+    </script>
+    <style>
+        /*body {
+            background-color: cornflowerblue;
+        }*/
+        .form-container {
+            /*position: absolute;*/
+            /*position: absolute;*/
+            /*top: 100vh;*/
+            background: #fff;
+            padding: 30px;
+            /*border-radius: 10px;
+            box-shadow: 0px 0px 10px 0px #000;*/
+        }
+
+        .field-margin {
+            margin-top: 20px;
+        }
+
+
+    </style>
+</head>
+<body>
+
+
+<div class="container text-center">
+    <div class="row justify-content-center">
+
+        <div class="col-12 col-sm-6 col-md-10">
+
+            <form method="POST" th:action="@{/user/changedata}">
+                <div>
+                    <b>
+                        <h1 th:text = "${username}">User</h1>
+                        <a th:href="@{/logout}"><i>Log out</i></a>
+                    </b>
+                </div>
+                <div class="btn-group col-12 col-sm-6 col-md-7" role="group" style="margin-bottom: 30px; margin-top: 10px">
+                    <button type="submit" class="btn btn-primary" name="action" value="block">Block users</button>
+                    <button type="submit" class="btn btn-primary" name="action" value="unblock"><i class="bi bi-unlock" style="font-size: 30px"></i></button>
+                    <button type="submit" class="btn btn-primary" name="action" value="delete"><i class="bi bi-trash" style="font-size: 30px"></i></button>
+                </div>
+
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col"><input type="checkbox" class="checkthis"  id="maincheckbox" onclick="selectAllUsers()"/></th>
+                        <th scope="col">Id</th>
+                        <th scope="col">User</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Registration date</th>
+                        <th scope="col">Last login date</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="user:${users}">
+                        <td><input type="checkbox" class="checkthis" th:id="${user.id}" th:value="${user.id}" name="id"/></td>
+                        <td th:text="${user.id}">Id</td>
+                        <td th:text="${user.name}">User</td>
+                        <td th:text="${user.email}">Email</td>
+                        <td th:text="${user.dateOfRegistration}">Registration date</td>
+                        <td th:text="${user.dateOfLastLogin}">Last login date</td>
+                        <td th:if="${user.active} == true">Active</td>
+                        <td th:if="${user.active} != true">Blocked</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
