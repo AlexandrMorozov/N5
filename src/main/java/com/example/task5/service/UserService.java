@@ -1,6 +1,5 @@
 package com.example.task5.service;
 
-import com.example.task5.model.Role;
 import com.example.task5.model.User;
 import com.example.task5.repo.RoleRepo;
 import com.example.task5.repo.UserRepo;
